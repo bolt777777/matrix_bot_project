@@ -3,7 +3,7 @@ from aiogram import Bot, Dispatcher, types
 from config import TOKEN
 
 bot = Bot(token=TOKEN)
-dp = Dispatcher()
+dp = Dispatcher(bot)
 
 def calculate_matrix(date_str):
     nums = [int(char) for char in date_str if char.isdigit()]
@@ -16,11 +16,11 @@ def calculate_matrix(date_str):
     result = "\n".join(f"{k}: {v}" for k, v in matrix.items())
     return result
 
-@dp.message(commands=["start"])
+@dp.message_handler(commands=["start"])
 async def start_command(message: types.Message):
     await message.answer("Привет! Введи дату рождения в формате ДД.ММ.ГГГГ:")
 
-@dp.message()
+@dp.message_handler()
 async def handle_message(message: types.Message):
     date_str = message.text.strip()
     try:
