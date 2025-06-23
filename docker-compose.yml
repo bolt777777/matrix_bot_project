@@ -1,6 +1,6 @@
 version: '3'
 
 services:
-  numerology-bot:
+  bot:
     build: .
     restart: always
