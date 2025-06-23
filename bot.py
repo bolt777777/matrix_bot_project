@@ -1,4 +1,3 @@
-import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from config import TOKEN
@@ -32,8 +31,5 @@ async def handle_message(message: types.Message):
     except Exception:
         await message.answer("Ошибка! Введи дату в формате ДД.ММ.ГГГГ")
 
-async def main():
-    await dp.start_polling(bot)
-
 if __name__ == "__main__":
-    asyncio.run(main())
+    dp.start_polling(bot)
