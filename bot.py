@@ -1,5 +1,5 @@
+import asyncio
 from aiogram import Bot, Dispatcher, types
-from aiogram.filters import Command
 from config import TOKEN
 
 bot = Bot(token=TOKEN)
@@ -11,14 +11,12 @@ def calculate_matrix(date_str):
     second_sum = sum(int(c) for c in str(first_sum))
     third_sum = first_sum - 2 * int(date_str[0])
     fourth_sum = sum(int(c) for c in str(third_sum))
-
     all_numbers = nums + [int(i) for i in str(first_sum) + str(second_sum) + str(third_sum) + str(fourth_sum)]
     matrix = {str(i): all_numbers.count(i) for i in range(1, 10)}
-
     result = "\n".join(f"{k}: {v}" for k, v in matrix.items())
     return result
 
-@dp.message(Command(commands=["start"]))
+@dp.message(commands=["start"])
 async def start_command(message: types.Message):
     await message.answer("Привет! Введи дату рождения в формате ДД.ММ.ГГГГ:")
 
@@ -31,5 +29,8 @@ async def handle_message(message: types.Message):
     except Exception:
         await message.answer("Ошибка! Введи дату в формате ДД.ММ.ГГГГ")
 
+async def main():
+    await dp.start_polling(bot)
+
 if __name__ == "__main__":
-    dp.start_polling(bot)
+    asyncio.run(main())
